@@ -23,7 +23,9 @@ const HomePage = () => {
         modalOpen,
         handelModalOpen,
         handelClose,
-        patientDetails
+        patientDetails,
+        filterStatus,
+        progressStatus
     } = useHome();
 
     return (
@@ -58,6 +60,8 @@ const HomePage = () => {
                                     patientList={patientList}
                                     filteredPatientList={filteredPatientList}
                                     handelModalOpen={handelModalOpen}
+                                    filterStatus={filterStatus}
+                                    progressStatus={progressStatus}
                                 />
                             </Grid>
                         </Grid>

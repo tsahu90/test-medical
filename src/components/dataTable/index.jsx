@@ -11,10 +11,10 @@ import Button from '@mui/material/Button';
 
 const DataTable = (props) => {
   const classes = useStyles();
-  const { patientList, filteredPatientList, handelModalOpen } = props;
+  const { patientList, filteredPatientList, handelModalOpen, filterStatus, progressStatus } = props;
 
   let patientData = patientList
-  if (filteredPatientList.length > 0) {
+  if (filterStatus === true) {
     patientData = filteredPatientList
   }
 
@@ -54,12 +54,25 @@ const DataTable = (props) => {
         </TableHead>
         <TableBody>
           {patientData.length > 0 ? renderRow() : (
+            <>
+              {!progressStatus && (
+                <TableRow>
+                  <TableCell align="left" colSpan={6}>
+                    No record found
+                  </TableCell>
+                </TableRow>
+              )}
+
+            </>
+          )}
+          {progressStatus && (
             <TableRow>
               <TableCell align="left" colSpan={6} className={classes.pageLoader}>
                 <CircularProgress />
               </TableCell>
             </TableRow>
           )}
+
         </TableBody>
       </Table>
     </TableContainer>

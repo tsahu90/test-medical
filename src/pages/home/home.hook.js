@@ -8,6 +8,8 @@ const useHome = () => {
     const [filteredPatientList, setFilteredPatientList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [patientDetails, setPatientDetails] = useState({});
+    const [filterStatus, setFilterStatus] = useState(false);
+    const [progressStatus, setProgressStatus] = useState(false);
 
     useEffect(() => {
         getPatientList()
@@ -37,6 +39,7 @@ const useHome = () => {
     };
 
     const getPatientList = async () => {
+        setProgressStatus(true)
         try {
             const response = await fetch("http://hapi.fhir.org/baseR4/Patient?_pretty=true", {
                 method: "GET",
@@ -50,6 +53,7 @@ const useHome = () => {
                 setPatientList(patientList)
                 console.log("patientList:", patientList);
             }
+            setProgressStatus(false)
         } catch (error) {
             console.error("Error:", error);
         }
@@ -57,6 +61,7 @@ const useHome = () => {
 
     const handleChange = (event, newValue) => {
         setAgeRangeValue(newValue);
+        setFilterStatus(true)
     };
     const handelModalOpen = (url) => {
         getPatientDetails(url)
@@ -94,7 +99,9 @@ const useHome = () => {
         modalOpen,
         handelModalOpen,
         handelClose,
-        patientDetails
+        patientDetails,
+        filterStatus,
+        progressStatus
     };
 };
 
